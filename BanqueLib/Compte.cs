@@ -9,11 +9,11 @@
         private readonly int _numero;
         private string _detenteur;
         private decimal _solde;
-        private bool _estGele = false;
+        private bool _estGele;
         private Statut _statut;
         #endregion
         #region ---- Constructeur ----
-        public Compte(int numero, string detenteur, decimal solde = 0m, Statut statut = Statut.OK, bool estGele = false)
+        public Compte(int numero, string detenteur, decimal solde = 0m, Statut statut = Statut.Vide, bool estGele = false)
         {
             if (numero <= 0)
                 throw new ArgumentOutOfRangeException("Numéro");
@@ -69,7 +69,7 @@
             var arrondi = decimal.Round(montant, 2);
             if (montant <= 0 || montant != arrondi)
                 throw new ArgumentOutOfRangeException("Montant");
-            if (!_estGele)
+            if (_statut == Statut.OK && montant <= _solde)
                 return true;
             else
                 return false;
@@ -79,9 +79,10 @@
             var arrondi = decimal.Round(montant, 2);
             if (montant <= 0 || montant != arrondi)
                 throw new ArgumentOutOfRangeException("Montant");
-            if (PeutDeposer(montant) && _statut != Statut.Gelé)
+            if (PeutDeposer(montant) && !_estGele)
             {
                 _solde += montant;
+                _statut = Statut.OK;
                 return _solde;
             }
             else
@@ -101,7 +102,7 @@
                 throw new InvalidOperationException("Retirer");
         }
         public decimal Vider() {
-            if (_statut != Statut.OK || _solde <= 0)
+            if (_estGele || _solde <= 0)
                 throw new InvalidOperationException("Vider");
             else
             {
@@ -113,15 +114,19 @@
         }
         public void Geler()
         {
-            if (_statut == Statut.Gelé)
+            if (_estGele)
                 throw new InvalidOperationException("Geler");
             else
                 _statut = Statut.Gelé;
+                _estGele = true;
         }
         public void Degeler()
         {
-            if (_statut != Statut.OK)
+            if (_estGele)
+            {
                 _statut = Statut.OK;
+                _estGele = false;
+            }
             else
                 throw new InvalidOperationException("Dégeler");
         }
