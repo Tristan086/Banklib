@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ConsoleSimulerCompte")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+04b86a862e9a195727ae92933d5a08f6d64fce14")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7212eb42c07cefeaf25a137dfa87b30c32808c9f")]
 [assembly: System.Reflection.AssemblyProductAttribute("ConsoleSimulerCompte")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ConsoleSimulerCompte")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

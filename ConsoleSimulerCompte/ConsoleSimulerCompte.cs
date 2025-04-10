@@ -1,6 +1,17 @@
 ﻿using BanqueLib;
+using System.Text.Json;
 
 var compte = new Compte(Random.Shared.Next(100, 1000), "Tristan Gordon");
+const string json = "Compte.json";
+static void Serialize(Compte compte, string json) {
+    File.WriteAllText(json, JsonSerializer.Serialize(compte, new JsonSerializerOptions {WriteIndented = true}));
+}
+static void Deserialize(ref Compte compte, string json) {
+    string data = File.ReadAllText(json);
+    compte = JsonSerializer.Deserialize<Compte>(data);
+}
+Deserialize(ref compte, json);
+
 while (true)
 {
     Console.Clear();
@@ -109,6 +120,7 @@ while (true)
             }
             break;
         case 'q':
+            Serialize(compte, json);
             Environment.Exit(0); break;
         case 'r':
             compte = new Compte(Random.Shared.Next(100, 1000), "Tristan Gordon");
